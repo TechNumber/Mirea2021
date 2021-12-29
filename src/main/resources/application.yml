@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/postgres'
+    username: 'postgres'
+    password: '12345'
+    hikari:
+      catalog: 'public'
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: 'public'
+        jdbc:
+          lob:
+            non_contextual_creation: true
+#  liquibase:
+#    change-log: 'classpath:db/changelog/db.changelog-master.xml'
+#    default-schema: 'public'
