@@ -32,4 +32,18 @@ public class RequestController {
     public DemoResponse<RequestDTO> getRequest(@ApiParam("Идентификатор запроса") @PathVariable Long id) {
         return DemoResponse.ok(requestService.getRequest(id));
     }
+
+    @DeleteMapping("{name}")
+    @ApiOperation(value = "Получение delete-запроса",
+            notes = "Получение delete-запроса")
+    public ResponseEntity<String> deleteRequest(@ApiParam("Идентификатор запроса") @PathVariable String name) {
+        return ResponseEntity.ok(String.format("%s was deleted", name));
+    }
+
+    @PutMapping("{name}")
+    @ApiOperation(value = "Получение put-запроса",
+            notes = "Получение put-запроса")
+    public ResponseEntity<String> putRequest(@ApiParam("Идентификатор запроса") @PathVariable String name) {
+        return ResponseEntity.ok(String.format("%s was updated", name));
+    }
 }
