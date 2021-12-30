@@ -15,6 +15,6 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-#  liquibase:
-#    change-log: 'classpath:db/changelog/db.changelog-master.xml'
-#    default-schema: 'public'
+  liquibase:
+    change-log: 'classpath:db/changelog/db.changelog-master.xml'
+    default-schema: 'public'

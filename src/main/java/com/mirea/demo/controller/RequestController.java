@@ -1,10 +1,14 @@
 package com.mirea.demo.controller;
 
+import com.mirea.demo.model.dto.CreatedRequestDTO;
+import com.mirea.demo.model.dto.DemoResponse;
+import com.mirea.demo.model.dto.NewRequestDTO;
+import com.mirea.demo.model.dto.RequestDTO;
+import com.mirea.demo.service.RequestService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,17 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "Методы контроллера")
 @AllArgsConstructor
 public class RequestController {
+    private RequestService requestService;
+
     @PostMapping
-    @ApiOperation(value = "Получение post-запроса",
-            notes = "Получение post-запроса")
-    public ResponseEntity<String> createRequest(@RequestBody String requestString) {
-        return ResponseEntity.ok(String.format("Hello %s", requestString));
+    @ApiOperation(value = "Запись запроса в базу данных",
+            notes = "Запись запроса в БД и получение созданного объекта")
+    public DemoResponse<CreatedRequestDTO> createRequest(@RequestBody NewRequestDTO newRequestDTO) {
+        CreatedRequestDTO request = requestService.createRequest(newRequestDTO);
+        return DemoResponse.ok(request);
     }
 
-    @GetMapping("{name}")
-    @ApiOperation(value = "Получение get-запроса",
-            notes = "Получение данных get-запроса")
-    public ResponseEntity<String> getRequest(@ApiParam("Идентификатор запроса") @PathVariable String name) {
-        return ResponseEntity.ok(String.format("Hello %s", name));
+    @GetMapping("{id}")
+    @ApiOperation(value = "Получение данных запроса",
+            notes = "Получение данных запроса по идентификатору")
+    public DemoResponse<RequestDTO> getRequest(@ApiParam("Идентификатор запроса") @PathVariable Long id) {
+        return DemoResponse.ok(requestService.getRequest(id));
     }
 }
