@@ -6,6 +6,7 @@ import com.mirea.demo.mapper.RequestMapper;
 import com.mirea.demo.model.dto.CreatedRequestDTO;
 import com.mirea.demo.model.dto.NewRequestDTO;
 import com.mirea.demo.model.dto.RequestDTO;
+import com.mirea.demo.model.dto.UpdatedRequestDTO;
 import com.mirea.demo.model.entity.RequestEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,12 @@ public class RequestService {
         return requestMapper.entityToDTO(requestEntity);
     }
 
-    public String deleteRequest(Long id) {
+    public void deleteRequest(Long id) {
         RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
         requestRepository.deleteById(id);
-        return String.format("Request with id = %d was successfully deleted", id);
     }
 
-    public RequestDTO putRequest(Long id, NewRequestDTO updatedRequestDTO) {
+    public RequestDTO putRequest(Long id, UpdatedRequestDTO updatedRequestDTO) {
         RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
         requestEntity = requestMapper.dtoToEntity(updatedRequestDTO);
         requestEntity.setId(id);
