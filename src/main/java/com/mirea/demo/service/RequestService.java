@@ -26,4 +26,20 @@ public class RequestService {
         RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
         return requestMapper.entityToDTO(requestEntity);
     }
+
+    public RequestDTO deleteRequest(Long id) {
+        RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
+        requestRepository.deleteById(id);
+        return requestMapper.entityToDTO(requestEntity);
+    }
+
+    public RequestDTO putRequest(Long id, NewRequestDTO newRequestDTO) {
+        RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
+        requestEntity.setAmount(newRequestDTO.getAmount());
+        requestEntity.setName(newRequestDTO.getName());
+        requestEntity.setDescription(newRequestDTO.getDescription());
+        requestRepository.save(requestEntity);
+        return requestMapper.entityToDTO(requestEntity);
+    }
+
 }
