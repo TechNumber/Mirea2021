@@ -27,17 +27,16 @@ public class RequestService {
         return requestMapper.entityToDTO(requestEntity);
     }
 
-    public RequestDTO deleteRequest(Long id) {
+    public String deleteRequest(Long id) {
         RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
         requestRepository.deleteById(id);
-        return requestMapper.entityToDTO(requestEntity);
+        return String.format("Request with id = %d was successfully deleted", id);
     }
 
-    public RequestDTO putRequest(Long id, NewRequestDTO newRequestDTO) {
+    public RequestDTO putRequest(Long id, NewRequestDTO updatedRequestDTO) {
         RequestEntity requestEntity = requestRepository.findById(id).orElseThrow(() -> new RequestNotFoundException(id));
-        requestEntity.setAmount(newRequestDTO.getAmount());
-        requestEntity.setName(newRequestDTO.getName());
-        requestEntity.setDescription(newRequestDTO.getDescription());
+        requestEntity = requestMapper.dtoToEntity(updatedRequestDTO);
+        requestEntity.setId(id);
         requestRepository.save(requestEntity);
         return requestMapper.entityToDTO(requestEntity);
     }

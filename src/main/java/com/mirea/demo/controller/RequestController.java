@@ -36,13 +36,13 @@ public class RequestController {
     @DeleteMapping("{id}")
     @ApiOperation(value = "Удаление запроса из базы данных",
             notes = "Получение идентификатора запроса и его удаление из БД с возвратом тела запроса")
-    public DemoResponse<RequestDTO> deleteRequest(@ApiParam("Идентификатор запроса") @PathVariable Long id) {
+    public DemoResponse<String> deleteRequest(@ApiParam("Идентификатор запроса") @PathVariable Long id) {
         return DemoResponse.ok(requestService.deleteRequest(id));
     }
 
     @PutMapping("{id}")
     @ApiOperation(value = "Обновление данных запроса",
-            notes = "Получение идентификатора запроса и его обновление по переданным данным")
+            notes = "По идентификатору запроса данные изменяются на переданные в метод")
     public DemoResponse<RequestDTO> putRequest(@ApiParam("Идентификатор запроса") @PathVariable Long id, @RequestBody NewRequestDTO newRequestDTO) {
         return DemoResponse.ok(requestService.putRequest(id, newRequestDTO));
     }
